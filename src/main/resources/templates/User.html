@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <script src="/webjars/bootstrap-paginator/1.0.2/src/bootstrap-paginator.js"></script>
+    <title>WebJars Demo</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+
+    <script>
+
+        $(function() {
+            var _this_btn_tr_id = {};
+            //delete
+            $('.del_btn').on('click',function () {
+                _this_btn_tr_id = $(this).parent().parent().find('td').eq(0).text();
+            });
+
+            // add
+            $('#btn_add').click(function () {
+                $.get("addForm",function(data,status){
+                });
+            });
+            $('#btn_submit').click(function () {
+                $('#btn_close').click();
+                del(_this_btn_tr_id);
+            });
+
+        var del = function (id) {
+            $.get("delete/"+id,function(data,status){
+                alert(status);
+            });
+        }
+
+        // page
+        //将id为pageLimit的ul元素设置为分页插件
+            $('#pageLimit').bootstrapPaginator({
+                currentPage: 1,//设置当前页码
+                size: "small",//设置控件的显示大小，
+                bootstrapMajorVersion: 3,//当前版本
+                alignment: "right",//设置控件的对齐方式
+                totalPages: 5,//设置总页数.
+                itemTexts: function (type, page, current) {
+                    //控制每个操作按钮的显示文字。是个函数，有3个参数: type, page, current。
+                    //通过这个参数我们就可以将操作按钮上的英文改为中文，如first-->首页，last-->尾页。
+                    switch (type) {
+                        case "first": return "首页";
+                        case "prev": return "<";
+                        case "next": return ">";
+                        case "last": return "末页";
+                        case "page": return page;
+                    }
+                },
+                //为操作按钮绑定click事件。
+                //回调函数的参数：event, originalEvent, type,page。
+                onPageClicked: function (event, originalEvent, type, page) {
+                }
+        });
+
+
+
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <!--add-->
+        <!--add-->
+        <form role="form" class="text-right" action="/addForm">
+                <button type="submit" class="btn btn-primary btn-sm">add</button>
+        </form>
+
+    <!--search-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" action="/list" method="post">
+
+                    <label class="col-sm-2 control-label">id</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control"  name="id">
+                    </div>
+
+                    <label for="name" class="col-sm-2 control-label">name</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+
+                    <label for="age" class="col-sm-2 control-label">age</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="age" name="age">
+                    </div>
+
+                    <label for="isMan" class="col-sm-2 control-label">isMan</label>
+                    <div class="col-sm-2" id="isMan">
+                        <select class="form-control" name="isMan">
+                            <option>true</option>
+                            <option>false</option>
+                        </select>
+                    </div>
+
+                    <label for="bath" class="col-sm-2 control-label">bath</label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" id="bath" name="bath">
+                    </div>
+
+                    <div class="col-sm-offset-2 col-sm-2">
+                        <button type="submit" class="btn btn-default">search</button>
+                    </div>
+
+            </form>
+        </div>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <th hidden>id</th>
+            <th>name</th>
+            <th>age</th>
+            <th>cash</th>
+            <th>isMan</th>
+            <th>bath</th>
+            <th>opt</th>
+            </thead>
+            <#list user as item>
+            <tr>
+                <td hidden>${(item.id)!}</td>
+                <td>${(item.name)!}</td>
+                <td>${(item.age)!}</td>
+                <td>${(item.cash)!}</td>
+                <td>${item.isMan?string("true","flase")}</td>
+                <td>${item.bath?string('yyyy-MM-dd')} </td>
+                <td><button class="del_btn btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">del</button></td>
+            </tr>
+        </#list>
+        </table>
+        <!-- page-->
+        <div class="panel panel-body text-right">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- 删除提示model-->
+    <!-- 按钮触发模态框 -->
+<!--    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        开始演示模态框
+    </button>-->
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Modal title
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    are you sure delete?
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_close"type="button" class="btn btn-default" data-dismiss="modal">close
+                    </button>
+                    <button id="btn_submit" type="button" class="btn btn-primary ">
+                        submit
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</body>
+</html>

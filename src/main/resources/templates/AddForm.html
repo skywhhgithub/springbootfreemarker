@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <title>WebJars Demo</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+
+    <script>
+
+        $(function () {
+
+        });
+
+
+    </script>
+</head>
+<body>
+<form class="form-horizontal" role="form" action="/add" method="post">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">id</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control"  name="id">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">name</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="age" class="col-sm-2 control-label">age</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="age" name="age">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="isMan" class="col-sm-2 control-label">isMan</label>
+        <div class="col-sm-4" id="isMan">
+            <select class="form-control" name="isMan">
+                <option>true</option>
+                <option>false</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="bath" class="col-sm-2 control-label">bath</label>
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="bath" name="bath">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">submit</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

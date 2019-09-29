@@ -1,0 +1,97 @@
+<html>
+<head>
+    <title>WebJars Demo</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <script>
+
+        $(function () {
+
+        });
+
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <table class="table table-bordered table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <#list productInfoPage as productInfo>
+                <tr>
+                    <td>${productInfo.id}</td>
+
+                </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+
+        <#--分页-->
+        <div class="col-md-12 column">
+            <ul class="pagination ">
+                <#if currentPage lte 1>
+                <li class="disabled "><a class="page-link" href="#">上一页</a></li>
+                <#else>
+                <li>
+                    <a class="page-link" href="/pageList?page=${currentPage -
+						1}&size=${size}">上一页</a>
+                </li>
+            </#if>
+
+
+            <!--
+
+            <#list 1..totalPage as index>
+                <#if currentPage == index>
+                    <li class="page-item active ">
+                        <a class="page-link" href="#">${index}</a>
+                    </li>
+                <#else>
+                    <li>
+                        <a class="page-link" href="/pageList?page=${index}&size=${size}">
+                            ${index}</a>
+                    </li>
+                </#if>
+            </#list>
+
+            -->
+
+
+            <#list (currentPage - 3)..(currentPage + 3) as index>
+            <#--如果位于第一页和最后一页之间-->
+            <#if (index > 1) && (index < totalPage)>
+            <li <#if currentPage == index>class="disabled"</#if>><a href="/pageList?page=${index}&size=${size}" >${index}</a></li>
+    </#if>
+</#list>
+
+<#--如果当前页往后查3页不是倒数第2页-->
+<#if (currentPage + 3) < (totalPage - 1)>
+<li><span class="text">…</span></li>
+</#if>
+
+<#--最后页-->
+<li <#if currentPage == totalPage>class="disabled"</#if>><a href="/pageList?page=${totalPage}&size=${size}" >${totalPage}</a></li>
+
+
+
+<#if currentPage gte totalPage>
+<li class="disabled "><a class="page-link" href="#">下一页</a></li>
+<#else>
+<li>
+    <a class="page-link" href="/pageList?page=${currentPage + 1}&size=${size}">下一页</a>
+</li>
+</#if>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>
